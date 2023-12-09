@@ -25,13 +25,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|max:255',
-            'password' => 'required|max:32',
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|max:32|min:6',
         ]);
 
-        $user = User::create($validateData);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        
         return response()->json($user, 201);
     }
 
@@ -61,14 +66,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $validateData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|max:255',
-            'password' => 'required|max:32',
+        $request->validate([
+            'name' => 'required|string|max:255',
+            // 'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|max:32|min:6',
         ]);
 
         if ($user) {
-            $user->update($validateData);
+            $user->update([
+                'name' => $request->name,
+                // 'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
             return response()->json($user, 200);
         } else {
             return response()->json(['message' => 'Usuário não encontrado'], 404);
