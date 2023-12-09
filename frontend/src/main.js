@@ -2,10 +2,13 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import axios from 'axios'
+// import axios from 'axios'
 import router from './router/index.js'
+import store from './store.js'
 
-axios.defaults.baseURL = "http://localhost:8000"
-axios.defaults.withCredentials = true
+const app = createApp(App)
 
-createApp(App).use(router).mount('#app')
+app.use(store)
+app.use(router)
+
+createApp(App).mount('#app')

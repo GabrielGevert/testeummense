@@ -10,7 +10,8 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: Home
+            component: Home,
+            meta: {public: true}
         },
         {
             path: '/dashboard',
@@ -20,14 +21,28 @@ const router = createRouter({
         {
             path: '/auth/login',
             name: 'login',
-            component: Login
+            component: Login,
+            meta: {public: true}
         },
         {
             path: '/auth/register',
             name: 'register',
-            component: Register
+            component: Register,
+            meta: {public: true}
         }
     ]
+
+    
+});
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = !!localStorage.getItem('token');
+
+    if(!to.meta.public &&!isAuthenticated) {
+        next({name: 'Login'});
+    } else {
+        next();
+    }
 });
 
 export default router;
