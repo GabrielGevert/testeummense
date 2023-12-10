@@ -13,11 +13,11 @@
 
         </router-link>
         <nav class="ml-auto flex items-center justify-center">
-          <router-link class="mr-5 hover:text-red-900" to="/">Home</router-link>
-          <router-link class="mr-5 hover:text-red-900" to="/dashboard">Dashboard</router-link>
-          <router-link class="mr-5 hover:text-red-900" to="/auth/login" v-if="!isLoggedin">Login</router-link>
-          <router-link class="mr-5 hover:text-red-900" to="/auth/register" v-if="!isLoggedin">Register</router-link>
-          <router-link class="mr-5 hover:text-red-900" @click="logout" to="/" v-if="isLoggedin">Sair</router-link>
+          <!-- <router-link class="mr-5 hover:text-red-900" to="/"  v-if="isLoggedIn">Home</router-link> -->
+          <router-link class="mr-5 hover:text-red-900" to="/dashboard" v-if="isLoggedIn">Dashboard</router-link>
+          <router-link class="mr-5 hover:text-red-900" to="/auth/login" v-if="!isLoggedIn">Login</router-link>
+          <router-link class="mr-5 hover:text-red-900" to="/auth/register" v-if="!isLoggedIn">Registro</router-link>
+          <router-link class="mr-5 hover:text-red-900" @click="logout" to="/" v-if="isLoggedIn">Sair</router-link>
         </nav>
       </div>
     </header>

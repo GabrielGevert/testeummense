@@ -9,24 +9,25 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'home',
+            name: 'Home',
             component: Home,
             meta: {public: true}
         },
         {
             path: '/dashboard',
-            name: 'dashboard',
-            component: Dashboard
+            name: 'Dashboard',
+            component: Dashboard,
+            meta: {public: false}
         },
         {
             path: '/auth/login',
-            name: 'login',
+            name: 'Login',
             component: Login,
             meta: {public: true}
         },
         {
             path: '/auth/register',
-            name: 'register',
+            name: 'Register',
             component: Register,
             meta: {public: true}
         }

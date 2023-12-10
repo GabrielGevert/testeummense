@@ -3,11 +3,11 @@
   <form @submit.prevent="login">
     <div class="mb-3">
       <label for="email" class="leading-7 text-sm">Email:</label>
-      <input v-model="email" type="email" name="email" id="email" placeholder="email@exemplo.com" :class="inputClasses">
+      <input v-model="email" type="email" name="email"  placeholder="email@exemplo.com" :class="inputClasses">
     </div>
     <div class="mb-3">
       <label for="password" class="leading-7 text-sm">Senha:</label>
-      <input v-model="password" type="password" name="password" id="password" placeholder="********"
+      <input v-model="password" type="password" name="password" placeholder="********"
         :class="inputClasses">
     </div>
 
@@ -19,7 +19,7 @@
 </template>
   
 <script>
-import axios from 'axios';
+import axios from '@/axios';
 
 export default {
   data() {
