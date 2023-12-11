@@ -22,7 +22,8 @@
         <input required type="password" name="password_confirmation" id="password_confirmation" placeholder="********"
           v-model="passwordConfirmation" :class="inputClasses">
 
-        <p v-if="passwordMismatch" class="text-red-500">{{ passwordMismatch }}</p>
+        <p v-if="emailError" class="text-red-500 text-center my-4 font-bold">{{ emailError }}</p>
+        <p v-if="passwordError" class="text-red-500 text-center my-4 font-bold">{{ passwordError }}</p>
       </div>
       <div class="mb-3">
         <button type="submit"
@@ -42,7 +43,8 @@ export default {
       email: "",
       password: "",
       passwordConfirmation: "",
-      passwordMismatch: "",
+      passwordError: "",
+      emailError: "",
       inputClasses:
         'w-full bg-white rounded border border-gray-300 focus:border-red-300 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out',
     };
@@ -51,12 +53,12 @@ export default {
   methods: {
     async register() {
       if (this.password !== this.passwordConfirmation) {
-        this.passwordMismatch = "As senhas não conferem";
+        this.passwordError = "As senhas não conferem";
         return;
       }
 
       if (this.password.length < 6) {
-        this.passwordMismatch = "A senha deve ter pelo menos 6 caracteres";
+        this.passwordError = "A senha deve ter pelo menos 6 caracteres";
         return;
       }
 
@@ -67,12 +69,14 @@ export default {
           password: this.password,
         });
 
-        this.passwordMismatch = ""; // limpar msg erro
+        this.passwordError = ""; // limpar msg erro
 
         alert("Registrado com sucesso! Você será redirecionado para a página de login.");
 
         this.$router.push('/auth/login');
       } catch (error) {
+        this.emailError = "E-mail já cadastrado em nossa base de dados"
+        this.passwordError= ""
         console.error("Aconteceu um erro:", error);
         if (error.response) {
           console.error("Detalhes:", error.response.data);
