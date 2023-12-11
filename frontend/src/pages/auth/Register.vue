@@ -1,33 +1,35 @@
 <template>
-  <h1 class="text-xl font-medium text-center">Registro</h1>
-  <form @submit.prevent="register">
-    <div class="mb-3">
-      <label for="name" class="leading-7 text-sm">Nome completo:</label>
-      <input required type="name" name="name" id="name" placeholder="Digite seu nome" v-model="name"
-        :class="inputClasses">
-    </div>
-    <div class="mb-3">
-      <label for="email" class="leading-7 text-sm">Email:</label>
-      <input required type="email" name="email" id="email" placeholder="email@exemplo.com" v-model="email"
-        :class="inputClasses">
-    </div>
-    <div class="mb-3">
-      <label for="password" class="leading-7 text-sm">Senha:</label>
-      <input required type="password" name="password" id="password" placeholder="********" v-model="password"
-        :class="inputClasses">
-    </div>
-    <div class="mb-3">
-      <label for="password_confirmation" class="leading-7 text-sm">Confirme sua senha:</label>
-      <input required type="password" name="password_confirmation" id="password_confirmation" placeholder="********"
-        v-model="passwordConfirmation" :class="inputClasses">
+  <section class="bg-white max-w-xl w-full mt-60 mx-auto border rounded p-5 shadow">
+    <h1 class="text-xl font-medium text-center">Registro</h1>
+    <form @submit.prevent="register">
+      <div class="mb-3">
+        <label for="name" class="leading-7 text-sm">Nome completo:</label>
+        <input required type="name" name="name" id="name" placeholder="Digite seu nome" v-model="name"
+          :class="inputClasses">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="leading-7 text-sm">Email:</label>
+        <input required type="email" name="email" id="email" placeholder="email@exemplo.com" v-model="email"
+          :class="inputClasses">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="leading-7 text-sm">Senha:</label>
+        <input required type="password" name="password" id="password" placeholder="********" v-model="password"
+          :class="inputClasses">
+      </div>
+      <div class="mb-3">
+        <label for="password_confirmation" class="leading-7 text-sm">Confirme sua senha:</label>
+        <input required type="password" name="password_confirmation" id="password_confirmation" placeholder="********"
+          v-model="passwordConfirmation" :class="inputClasses">
 
-      <p v-if="passwordMismatch" class="text-red-500">{{ passwordMismatch }}</p>
-    </div>
-    <div class="mb-3">
-      <button type="submit"
-        class="text-red-100 w-full bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-400 rounded text-lg">Registrar</button>
-    </div>
-  </form>
+        <p v-if="passwordMismatch" class="text-red-500">{{ passwordMismatch }}</p>
+      </div>
+      <div class="mb-3">
+        <button type="submit"
+          class="text-red-100 w-full bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-400 rounded text-lg">Registrar</button>
+      </div>
+    </form>
+  </section>
 </template>
 
 <script>

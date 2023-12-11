@@ -13,7 +13,7 @@
 
         </router-link>
         <nav class="ml-auto flex items-center justify-center">
-          <!-- <router-link class="mr-5 hover:text-red-900" to="/"  v-if="isLoggedIn">Home</router-link> -->
+          <router-link class="mr-5 hover:text-red-900" to="/"  v-if="isLoggedIn">Home</router-link>
           <router-link class="mr-5 hover:text-red-900" to="/dashboard" v-if="isLoggedIn">Dashboard</router-link>
           <router-link class="mr-5 hover:text-red-900" to="/auth/login" v-if="!isLoggedIn">Login</router-link>
           <router-link class="mr-5 hover:text-red-900" to="/auth/register" v-if="!isLoggedIn">Registro</router-link>
@@ -21,10 +21,9 @@
         </nav>
       </div>
     </header>
-
-    <section class="bg-white max-w-xl w-full mt-60 mx-auto border rounded p-5 shadow">
+    
       <RouterView></RouterView>
-    </section>
+
   </div>
 </template>
 

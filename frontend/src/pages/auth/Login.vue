@@ -1,21 +1,22 @@
 <template>
-  <h1 class="text-xl font-medium text-center">Login</h1>
-  <form @submit.prevent="login">
-    <div class="mb-3">
-      <label for="email" class="leading-7 text-sm">Email:</label>
-      <input v-model="email" type="email" name="email"  placeholder="email@exemplo.com" :class="inputClasses">
-    </div>
-    <div class="mb-3">
-      <label for="password" class="leading-7 text-sm">Senha:</label>
-      <input v-model="password" type="password" name="password" placeholder="********"
-        :class="inputClasses">
-    </div>
+  <section class="bg-white max-w-xl w-full mt-60 mx-auto border rounded p-5 shadow">
+    <h1 class="text-xl font-medium text-center">Login</h1>
+    <form @submit.prevent="login">
+      <div class="mb-3">
+        <label for="email" class="leading-7 text-sm">Email:</label>
+        <input v-model="email" type="email" name="email" placeholder="email@exemplo.com" :class="inputClasses">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="leading-7 text-sm">Senha:</label>
+        <input v-model="password" type="password" name="password" placeholder="********" :class="inputClasses">
+      </div>
 
-    <div class="mb-3">
-      <button type="submit"
-        class="text-red-100 w-full bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-400 rounded text-lg">Login</button>
-    </div>
-  </form>
+      <div class="mb-3">
+        <button type="submit"
+          class="text-red-100 w-full bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-400 rounded text-lg">Login</button>
+      </div>
+    </form>
+  </section>
 </template>
   
 <script>
@@ -46,7 +47,7 @@ export default {
           this.$router.push('/')
         }
       } catch (error) {
-          console.error("Aconteceu um erro:", error)
+        console.error("Aconteceu um erro:", error)
         if (error.response) {
           console.error("Detalhes:", error.response.data)
         }
