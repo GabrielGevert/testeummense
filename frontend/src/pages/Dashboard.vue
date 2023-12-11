@@ -6,8 +6,8 @@
 
             <div class="font-medium">
                 <div class="flex justify-between mb-4">
-                    <h1 class="font-medium mb-4">Usuários</h1>
-                    <button @click="showAddUserModal"
+                    <h1 class="font-medium mb-4 ml-3">Usuários</h1>
+                    <button style="width:200px" @click="showAddUserModal"
                         class="bg-teal-500 hover:bg-teal-600 text-white font-normal py-2 px-4 rounded">Adicionar
                         Usuário</button>
                 </div>
@@ -21,10 +21,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="px-4 py-2 whitespace-pre-line break-all border"> ID</td>
-                            <td class="px-4 py-2 whitespace-pre-line break-all border"> Nome</td>
-                            <td class="px-4 py-2 whitespace-pre-line break-all border"> Email </td>
+                        <tr v-for="user in users" :key="user.id">
+                            <td class="px-4 py-2 whitespace-pre-line break-all border">{{ user.id }}</td>
+                            <td class="px-4 py-2 whitespace-pre-line break-all border">{{ user.name }}</td>
+                            <td class="px-4 py-2 whitespace-pre-line break-all border">{{ user.email }} </td>
                             <td class="px-4 py-2 border">
                                 <div class="flex justify-between">
                                     <button @click="showEditUserModal"
@@ -38,16 +38,18 @@
                 </table>
             </div>
         </div>
-            <addUserModal v-show="addUserModalVisible" @close="closeAddUserModal" />
-            <deleteUserModal v-show="deleteUserModalVisible" @close="closeDeleteUserModal" />
-            <editUserModal v-show="editUserModalVisible" @close="closeEditUserModal" />
+        <addUserModal v-show="addUserModalVisible" @close="closeAddUserModal" />
+        <deleteUserModal v-show="deleteUserModalVisible" @close="closeDeleteUserModal" />
+        <editUserModal v-show="editUserModalVisible" @close="closeEditUserModal" />
     </section>
 </template>
 
 <script>
+import axios from '@/axios';
+
 import addUserModal from '../components/AddUserModal.vue';
-import deleteUserModal from '../components/DeleteUserModal.vue'
-import editUserModal from '../components/EditUserModal.vue'
+import deleteUserModal from '../components/DeleteUserModal.vue';
+import editUserModal from '../components/EditUserModal.vue';
 
 export default {
     components: {
@@ -59,10 +61,25 @@ export default {
         return {
             addUserModalVisible: false,
             deleteUserModalVisible: false,
-            editUserModalVisible : false,
+            editUserModalVisible: false,
+
+            users: []
         };
     },
+    created() {
+        this.userLoadData();
+    },
     methods: {
+        async userLoadData() {
+            try {
+                const response = await axios.get("/users");
+                this.users = response.data;
+            } catch (error) {
+                console.error("Um erro aconteceu na busca de usuários: ", error);
+            }
+        },
+
+
         showAddUserModal() {
             this.addUserModalVisible = true;
         },
@@ -71,7 +88,7 @@ export default {
         },
 
 
-        
+
         showDeleteUserModal() {
             this.deleteUserModalVisible = true;
         },
