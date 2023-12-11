@@ -29,7 +29,7 @@
                                 <div class="flex justify-between">
                                     <button @click="showEditUserModal"
                                         class="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-1 px-2 rounded w-20">Editar</button>
-                                    <button @click="showDeleteUserModal"
+                                    <button @click="showDeleteUserModal(user)"
                                         class="bg-red-500 hover:bg-red-600 text-white font-normal py-1 px-2 rounded w-20 ">Deletar</button>
                                 </div>
                             </td>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <addUserModal v-show="addUserModalVisible" @close="closeAddUserModal" />
-        <deleteUserModal v-show="deleteUserModalVisible" @close="closeDeleteUserModal" />
+        <deleteUserModal :user="selectedUser" v-show="deleteUserModalVisible" @close="closeDeleteUserModal" @refreshUsers="handleRefreshUsers" />
         <editUserModal v-show="editUserModalVisible" @close="closeEditUserModal" />
     </section>
 </template>
@@ -62,8 +62,10 @@ export default {
             addUserModalVisible: false,
             deleteUserModalVisible: false,
             editUserModalVisible: false,
+            selectedUser: {},
 
-            users: []
+            users: [],
+
         };
     },
     created() {
@@ -89,8 +91,9 @@ export default {
 
 
 
-        showDeleteUserModal() {
+        showDeleteUserModal(user) {
             this.deleteUserModalVisible = true;
+            this.selectedUser = user;
         },
         closeDeleteUserModal() {
             this.deleteUserModalVisible = false;
@@ -103,6 +106,13 @@ export default {
         },
         closeEditUserModal() {
             this.editUserModalVisible = false;
+        },
+
+
+
+        handleRefreshUsers() {
+            
+            this.userLoadData();
         },
     }
 };
