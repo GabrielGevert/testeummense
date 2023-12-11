@@ -17,25 +17,31 @@
 
         <section class="p-6 relative" id="modalDescription">
           <slot name="body">
-              <form>
-                <div class="mb-3">
-                  <label for="email" class="leading-7 text-sm">Nome:</label>
-                  <input v-model="name" type="email" name="email" placeholder="Digite o nome do usuário" :class="inputClasses">
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="leading-7 text-sm">Email:</label>
-                  <input v-model="email" type="email" name="email" placeholder="email@exemplo.com" :class="inputClasses">
-                </div>
-                <div class="mb-3">
-                  <label for="password" class="leading-7 text-sm">Senha:</label>
-                  <input v-model="password" type="password" name="password" placeholder="********" :class="inputClasses">
-                </div>
-          
-                <div class="mb-3 text-center">
-                  <button type="submit"
-                    class="text-red-100 w-2/4 bg-teal-500 border-0 py-2 px-6 focus:outline-none hover:bg-teal-400 rounded text-lg">Adicionar usuário</button>
-                </div>
-              </form>
+            <form @submit.prevent="addUser">
+              <div class="mb-3">
+                <label class="leading-7 text-sm">Nome:</label>
+                <input v-model="name" required type="name" name="email" placeholder="Digite o nome do usuário"
+                  :class="inputClasses">
+              </div>
+              <div class="mb-3">
+                <label class="leading-7 text-sm">Email:</label>
+                <input v-model="email" required type="email" name="email" placeholder="email@exemplo.com"
+                  :class="inputClasses">
+              </div>
+              <div class="mb-3">
+                <label class="leading-7 text-sm">Senha:</label>
+                <input v-model="password" required type="password" name="password" placeholder="********"
+                  :class="inputClasses">
+              </div>
+
+              <p v-if="passwordError" class="text-red-500 mb-5">{{ passwordError }}</p>
+
+              <div class="mb-3 text-center">
+                <button type="submit"
+                  class="text-red-100 w-2/4 bg-teal-500 border-0 py-2 px-6 focus:outline-none hover:bg-teal-400 rounded text-lg">Adicionar
+                  usuário</button>
+              </div>
+            </form>
           </slot>
         </section>
       </div>
@@ -44,13 +50,50 @@
 </template>
 
 <script>
+import axios from '@/axios';
+
 export default {
+
   data() {
     return {
+      name: "",
+      email: "",
+      password: "",
+      passwordError: "",
       inputClasses: 'w-full bg-white rounded border border-gray-300 focus:border-teal-300 focus:ring-2 focus:ring-teal-400 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
     };
   },
   methods: {
+    async addUser() {
+
+      if (this.password.length < 6) {
+        this.passwordError = "A senha deve ter pelo menos 6 caracteres";
+        return;
+      }
+
+      try {
+        const response = await axios.post("/register", {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        });
+
+        this.passwordError = ""; // limpar msg erro
+
+        this.name = ""  // limpar campo
+        this.email = ""  // limpar campo
+        this.password = ""  // limpar campo
+
+
+        alert("Adicionado com sucesso!");
+
+      } catch (error) {
+        console.error("Aconteceu um erro:", error);
+        if (error.response) {
+          console.error("Detalhes:", error.response.data);
+        }
+      }
+    },
     close() {
       this.$emit('close');
     },
@@ -67,5 +110,4 @@ export default {
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: opacity .5s ease;
-}
-</style>
+}</style>
