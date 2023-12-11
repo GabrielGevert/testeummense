@@ -36,6 +36,8 @@ export default {
 
   methods: {
     async login() {
+      this.passwordError = "";
+
       try {
         const response = await axios.post("/login", {
           email: this.email,
@@ -43,20 +45,29 @@ export default {
         });
 
         if (response.data.token) {
-          localStorage.setItem('token', response.data.token);
 
+          this.$store.commit('SET_CURRENT_USER', response.data.user);
           this.$store.commit('LOGIN');
 
-          this.$router.push('/')
+
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+
+          this.$router.push('/');
         }
       } catch (error) {
-        console.error("Aconteceu um erro:", error)
-        this.passwordError = "Dados incorretos"
+        console.error("Aconteceu um erro:", error);
+        if (error.response && error.response.status === 401) {
+          this.passwordError = "Email ou senha incorretos";
+        } else {
+          this.passwordError = "Erro ao realizar login. Tente novamente mais tarde.";
+        }
         if (error.response) {
-          console.error("Detalhes:", error.response.data)
+          console.error("Detalhes:", error.response.data);
         }
       }
     }
   }
+
 };
 </script>

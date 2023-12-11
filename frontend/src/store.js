@@ -1,31 +1,43 @@
+// store.js
 import { createStore } from "vuex";
 import router from './router/index.js';
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
-    state: {
-        isLoggedIn: !!localStorage.getItem('token')
+  state: {
+    isLoggedIn: !!localStorage.getItem('token'),
+    currentUser: null,
+  },
+  mutations: {
+    SET_CURRENT_USER(state, user) {
+      state.currentUser = user;
     },
-    mutations: {
-        LOGIN(state) {
-            state.isLoggedIn = true;
-            // console.log('Usuário logado:', state.isLoggedIn);
-        },
-        LOGOUT(state) {
-            state.isLoggedIn = false;
-            localStorage.removeItem('token'); // Remova o token do localStorage durante o logout
-            // console.log('Usuário deslogado:', state.isLoggedIn);
-        }
+    LOGIN(state) {
+      state.isLoggedIn = true;
     },
-    actions: {
-        login({ commit }) {
-            commit('LOGIN');
-        },
-        logout({ commit, dispatch }) {
-            commit('LOGOUT');
-            dispatch('navigateToLogin');
-        },
-        navigateToLogin() {
-            router.push({ name: 'Login' });
-        }
-    }
+    LOGOUT(state) {
+      state.isLoggedIn = false;
+      state.currentUser = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('currentUser');
+    },
+  },
+  actions: {
+    login({ commit }, user) {
+      commit('SET_CURRENT_USER', user);
+      commit('LOGIN');
+    },
+    logout({ commit, dispatch }) {
+      commit('LOGOUT');
+      dispatch('navigateToLogin');
+    },
+    navigateToLogin() {
+      router.push({ name: 'Login' });
+    },
+  },
+  plugins: [createPersistedState({
+    key: 'my-vuex-state',
+    paths: ['isLoggedIn', 'currentUser'],
+  })],
 });
+

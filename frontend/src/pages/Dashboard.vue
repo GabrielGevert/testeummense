@@ -29,9 +29,14 @@
                                 <div class="flex justify-between">
                                     <button @click="showEditUserModal(user)"
                                         class="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-1 px-2 rounded w-20">Editar</button>
-                                    <button @click="showDeleteUserModal(user)"
-                                        class="bg-red-500 hover:bg-red-600 text-white font-normal py-1 px-2 rounded w-20 ">Deletar</button>
+
+                                    <button @click="showDeleteUserModal(user)" v-if="isCurrentUser(user)"
+                                        :class="{ 'bg-red-500 hover:bg-red-600 text-white font-normal py-1 px-2 rounded w-20': isCurrentUser(user), 'cursor-not-allowed opacity-50': !isCurrentUser(user) }"
+                                        :disabled="!isCurrentUser(user)">
+                                        Deletar
+                                    </button>
                                 </div>
+
                             </td>
                         </tr>
                     </tbody>
@@ -39,8 +44,10 @@
             </div>
         </div>
         <addUserModal v-show="addUserModalVisible" @close="closeAddUserModal" @refreshUsers="handleRefreshUsers" />
-        <deleteUserModal :user="selectedUser" v-show="deleteUserModalVisible" @close="closeDeleteUserModal" @refreshUsers="handleRefreshUsers" />
-        <editUserModal :user="selectedUser" v-show="editUserModalVisible" @close="closeEditUserModal" @refreshUsers="handleRefreshUsers" />
+        <deleteUserModal :user="selectedUser" v-show="deleteUserModalVisible" @close="closeDeleteUserModal"
+            @refreshUsers="handleRefreshUsers" />
+        <editUserModal :user="selectedUser" v-show="editUserModalVisible" @close="closeEditUserModal"
+            @refreshUsers="handleRefreshUsers" />
     </section>
 </template>
 
@@ -71,6 +78,14 @@ export default {
     created() {
         this.userLoadData();
     },
+    watch: {
+        '$store.state.currentUser': {
+            handler(newValue) {
+                console.log('currentUser atualizado:', newValue);
+            },
+            immediate: true,
+        },
+    },
     methods: {
         async userLoadData() {
             try {
@@ -80,6 +95,12 @@ export default {
                 console.error("Um erro aconteceu na busca de usuários: ", error);
             }
         },
+
+        isCurrentUser(user) {
+            const currentUser = this.$store.state.currentUser;
+            return currentUser ? user.id !== currentUser.id : true;
+        },
+
 
 
         showAddUserModal() {
@@ -110,9 +131,7 @@ export default {
         },
 
 
-
         handleRefreshUsers() {
-
             this.userLoadData();
         },
     }
