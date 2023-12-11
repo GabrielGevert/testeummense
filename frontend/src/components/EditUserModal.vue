@@ -17,19 +17,25 @@
 
                 <section class="p-6 relative" id="modalDescription">
                     <slot name="body">
-                        <form @submit.prevent="addUser">
+                        <form @submit.prevent="editUser">
                             <div class="mb-3">
                                 <label class="leading-7 text-sm">Nome:</label>
-                                <input v-model="name" required type="name" name="email"
+                                <input v-model="nameEdit" required type="name" name="name"
                                     placeholder="Digite o nome do usuário" :class="inputClasses">
                             </div>
                             <div class="mb-3">
                                 <label class="leading-7 text-sm">Email:</label>
-                                <input v-model="email" required type="email" name="email" placeholder="email@exemplo.com"
-                                    :class="inputClasses">
+                                <input readonly type="email" name="email" :value="this.user.email"
+                                    placeholder="email@exemplo.com" class="cursor-not-allowed" :class="inputClasses">
                             </div>
 
-                            <p v-if="passwordError" class="text-red-500 mb-5">{{ passwordError }}</p>
+                            <div class="mb-3">
+                                <label class="leading-7 text-sm">Senha:</label>
+                                <input v-model="passwordEdit" required type="password" name="password"
+                                    placeholder="Digite a nova senha" :class="inputClasses">
+                            </div>
+
+                            <p v-if="passwordError" class="text-red-500">{{ passwordError }}</p>
 
                             <div class="mb-3 text-center">
                                 <button type="submit"
@@ -46,41 +52,51 @@
   
 <script>
 import axios from '@/axios';
-
 export default {
+    props: {
+        user: {
+            type: Object,
+            required: true,
+        },
+    },
 
     data() {
         return {
-            name: "",
-            email: "",
-            password: "",
+            nameEdit: "",
+            passwordEdit: "",
             passwordError: "",
             inputClasses: 'w-full bg-white rounded border border-gray-300 focus:border-yellow-300 focus:ring-2 focus:ring-yellow-400 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
         };
     },
-    methods: {
-        async addUser() {
 
-            if (this.password.length < 6) {
+    watch: {
+        user: {
+            immediate: true,
+            handler(newValue) {
+                this.nameEdit = newValue.name;
+            },
+        },
+    },
+
+    methods: {
+        async editUser() {
+
+            if (this.passwordEdit.length < 6) {
                 this.passwordError = "A senha deve ter pelo menos 6 caracteres";
                 return;
             }
+            const id = this.user.id
 
             try {
-                const response = await axios.post("/register", {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
+                const response = await axios.put("/users/" + id, {
+                    name: this.nameEdit,
+                    password: this.passwordEdit,
                 });
 
-                this.passwordError = ""; // limpar msg erro
+                alert("Usuário editado com sucesso!");
 
-                this.name = ""  // limpar campo
-                this.email = ""  // limpar campo
-                this.password = ""  // limpar campo
-
-
-                alert("Adicionado com sucesso!");
+                this.$emit('refreshUsers')
+                this.$emit('close');
 
             } catch (error) {
                 console.error("Aconteceu um erro:", error);
@@ -89,13 +105,15 @@ export default {
                 }
             }
         },
+
         close() {
             this.$emit('close');
         },
     },
 };
+
 </script>
-  
+
 <style>
 .modal-fade-enter,
 .modal-fade-leave-to {
