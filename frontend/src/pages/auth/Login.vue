@@ -11,6 +11,8 @@
         <input v-model="password" type="password" name="password" placeholder="********" :class="inputClasses">
       </div>
 
+      <p v-if="passwordError" class="text-red-500 text-center my-4 font-bold">{{ passwordError }}</p>
+
       <div class="mb-3">
         <button type="submit"
           class="text-red-100 w-full bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-400 rounded text-lg">Login</button>
@@ -27,6 +29,7 @@ export default {
     return {
       email: "",
       password: "",
+      passwordError: "",
       inputClasses: 'w-full bg-white rounded border border-gray-300 focus:border-red-300 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
     };
   },
@@ -48,6 +51,7 @@ export default {
         }
       } catch (error) {
         console.error("Aconteceu um erro:", error)
+        this.passwordError = "Dados incorretos"
         if (error.response) {
           console.error("Detalhes:", error.response.data)
         }
