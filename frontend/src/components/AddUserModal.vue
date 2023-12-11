@@ -72,20 +72,17 @@ export default {
       }
 
       try {
-        const response = await axios.post("/register", {
+        await axios.post("/register", {
           name: this.name,
           email: this.email,
           password: this.password,
         });
 
-        this.passwordError = ""; // limpar msg erro
+        alert("Usuário adicionado com sucesso!");
 
-        this.name = ""  // limpar campo
-        this.email = ""  // limpar campo
-        this.password = ""  // limpar campo
+        this.$emit('refreshUsers')
+        this.$emit('close');
 
-
-        alert("Adicionado com sucesso!");
 
       } catch (error) {
         console.error("Aconteceu um erro:", error);
@@ -110,4 +107,5 @@ export default {
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: opacity .5s ease;
-}</style>
+}
+</style>

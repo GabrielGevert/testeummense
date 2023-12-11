@@ -27,7 +27,7 @@
                             <td class="px-4 py-2 whitespace-pre-line break-all border">{{ user.email }} </td>
                             <td class="px-4 py-2 border">
                                 <div class="flex justify-between">
-                                    <button @click="showEditUserModal"
+                                    <button @click="showEditUserModal(user)"
                                         class="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-1 px-2 rounded w-20">Editar</button>
                                     <button @click="showDeleteUserModal(user)"
                                         class="bg-red-500 hover:bg-red-600 text-white font-normal py-1 px-2 rounded w-20 ">Deletar</button>
@@ -38,9 +38,9 @@
                 </table>
             </div>
         </div>
-        <addUserModal v-show="addUserModalVisible" @close="closeAddUserModal" />
+        <addUserModal v-show="addUserModalVisible" @close="closeAddUserModal" @refreshUsers="handleRefreshUsers" />
         <deleteUserModal :user="selectedUser" v-show="deleteUserModalVisible" @close="closeDeleteUserModal" @refreshUsers="handleRefreshUsers" />
-        <editUserModal v-show="editUserModalVisible" @close="closeEditUserModal" />
+        <editUserModal :user="selectedUser" v-show="editUserModalVisible" @close="closeEditUserModal" @refreshUsers="handleRefreshUsers" />
     </section>
 </template>
 
@@ -101,8 +101,9 @@ export default {
 
 
 
-        showEditUserModal() {
+        showEditUserModal(user) {
             this.editUserModalVisible = true;
+            this.selectedUser = user;
         },
         closeEditUserModal() {
             this.editUserModalVisible = false;
@@ -111,7 +112,7 @@ export default {
 
 
         handleRefreshUsers() {
-            
+
             this.userLoadData();
         },
     }
