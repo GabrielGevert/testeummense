@@ -7,8 +7,8 @@
             <div class="font-medium">
                 <div class="flex justify-between mb-4">
                     <h1 class="font-medium mb-4">Usuários</h1>
-                    <button @click="showModalUser"
-                        class="bg-green-500 hover:bg-green-600 text-white font-normal py-2 px-4 rounded">Adicionar
+                    <button @click="showAddUserModal"
+                        class="bg-teal-500 hover:bg-teal-600 text-white font-normal py-2 px-4 rounded">Adicionar
                         Usuário</button>
                 </div>
                 <table class="table-fixed w-full">
@@ -22,15 +22,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="px-4 py-2 whitespace-pre-line break-all border">01</td>
-                            <td class="px-4 py-2 whitespace-pre-line break-all border">Gabriel Gevert</td>
-                            <td class="px-4 py-2 whitespace-pre-line break-all border">gevertlolz@gmail.com</td>
+                            <td class="px-4 py-2 whitespace-pre-line break-all border"> ID</td>
+                            <td class="px-4 py-2 whitespace-pre-line break-all border"> Nome</td>
+                            <td class="px-4 py-2 whitespace-pre-line break-all border"> Email </td>
                             <td class="px-4 py-2 border">
                                 <div class="flex justify-between">
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-600 text-white font-normal py-1 px-2 rounded">Editar</button>
-                                    <button
-                                        class="bg-red-500 hover:bg-red-600 text-white font-normal py-1 px-2 rounded">Deletar</button>
+                                    <button @click="showEditUserModal"
+                                        class="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-1 px-2 rounded w-20">Editar</button>
+                                    <button @click="showDeleteUserModal"
+                                        class="bg-red-500 hover:bg-red-600 text-white font-normal py-1 px-2 rounded w-20 ">Deletar</button>
                                 </div>
                             </td>
                         </tr>
@@ -38,29 +38,55 @@
                 </table>
             </div>
         </div>
-            <userModal v-show="userModalVisible" @close="closeModalUser" /> 
+            <addUserModal v-show="addUserModalVisible" @close="closeAddUserModal" />
+            <deleteUserModal v-show="deleteUserModalVisible" @close="closeDeleteUserModal" />
+            <editUserModal v-show="editUserModalVisible" @close="closeEditUserModal" />
     </section>
 </template>
 
 <script>
-import userModal from '../components/AddUserModal.vue';
+import addUserModal from '../components/AddUserModal.vue';
+import deleteUserModal from '../components/DeleteUserModal.vue'
+import editUserModal from '../components/EditUserModal.vue'
 
 export default {
     components: {
-        userModal,
+        addUserModal,
+        deleteUserModal,
+        editUserModal,
     },
     data() {
         return {
-            userModalVisible: false,
+            addUserModalVisible: false,
+            deleteUserModalVisible: false,
+            editUserModalVisible : false,
         };
     },
     methods: {
-        showModalUser() {
-            this.userModalVisible = true;
+        showAddUserModal() {
+            this.addUserModalVisible = true;
         },
-        closeModalUser() {
-            this.userModalVisible = false;
-        }
+        closeAddUserModal() {
+            this.addUserModalVisible = false;
+        },
+
+
+        
+        showDeleteUserModal() {
+            this.deleteUserModalVisible = true;
+        },
+        closeDeleteUserModal() {
+            this.deleteUserModalVisible = false;
+        },
+
+
+
+        showEditUserModal() {
+            this.editUserModalVisible = true;
+        },
+        closeEditUserModal() {
+            this.editUserModalVisible = false;
+        },
     }
 };
 </script>
