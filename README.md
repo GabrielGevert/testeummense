@@ -10,13 +10,14 @@ Primeiro passo, clonar o projeto:
 # Clonar
 git clone https://github.com/GabrielGevert/testeummense.git
 
-# Acessar backend (já na pasta raiz do projeto) (api)
-cd api
 ```
 
 ## Configuração - Backend
 
 ``` bash
+# Acessar backend (já na pasta raiz do projeto) (api)
+cd api
+
 # Instalar dependências do projeto
 composer install
 
@@ -35,6 +36,9 @@ php artisan serve
 
 ## Configuração - Frontend
 ``` bash
+# Acessar frontend (já na pasta raiz do projeto) (frontend)
+cd frontend
+
 # Atualizar dependências
 npm install
 
@@ -45,4 +49,4 @@ npm run dev
 npm run build
 ```
 
-## Agradeço a oportunidade de participar do processo seletivo 
+## Agradeço a oportunidade de participar do processo seletivo!
