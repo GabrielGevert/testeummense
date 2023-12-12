@@ -49,8 +49,7 @@ npm install
 # Rodar em ambiente local localhost:3000
 npm run dev
 
-# Rodar em ambiente de produção
-npm run build
-```
+[http://127.0.0.1:3000/] <- url e porta padrão (Abrir para começar aplicação)
+
 
 ## Agradeço a oportunidade de participar do processo seletivo!
