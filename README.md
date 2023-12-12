@@ -28,7 +28,7 @@ composer install
 # Configurar variáveis de ambiente (DB_)
 cp .env.example .env
 php artisan key:generate
-/api/.env
+# /api/.env
 
 # Criar migrations (tabelas)
 php artisan migrate --seed
