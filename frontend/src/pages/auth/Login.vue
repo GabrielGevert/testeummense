@@ -10,9 +10,7 @@
         <label for="password" class="leading-7 text-sm">Senha:</label>
         <input v-model="password" type="password" name="password" placeholder="********" :class="inputClasses">
       </div>
-
       <p v-if="passwordError" class="text-red-500 text-center my-4 font-bold">{{ passwordError }}</p>
-
       <div class="mb-3">
         <button type="submit"
           class="text-red-100 w-full bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-400 rounded text-lg">Login</button>
@@ -37,7 +35,6 @@ export default {
   methods: {
     async login() {
       this.passwordError = "";
-
       try {
         const response = await axios.post("/login", {
           email: this.email,
@@ -45,16 +42,13 @@ export default {
         });
 
         if (response.data.token) {
-
           this.$store.commit('SET_CURRENT_USER', response.data.user);
           this.$store.commit('LOGIN');
-
-
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('currentUser', JSON.stringify(response.data.user));
-
           this.$router.push('/');
         }
+
       } catch (error) {
         console.error("Aconteceu um erro:", error);
         if (error.response && error.response.status === 401) {
@@ -62,12 +56,12 @@ export default {
         } else {
           this.passwordError = "Erro ao realizar login. Tente novamente mais tarde.";
         }
+        
         if (error.response) {
           console.error("Detalhes:", error.response.data);
         }
       }
     }
   }
-
 };
 </script>

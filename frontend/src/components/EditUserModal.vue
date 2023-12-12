@@ -14,7 +14,6 @@
                         </svg>
                     </button>
                 </header>
-
                 <section class="p-6 relative" id="modalDescription">
                     <slot name="body">
                         <form @submit.prevent="editUser">
@@ -34,9 +33,7 @@
                                 <input v-model="passwordEdit" required type="password" name="password"
                                     placeholder="Digite a nova senha" :class="inputClasses">
                             </div>
-
                             <p v-if="passwordError" class="text-red-500">{{ passwordError }}</p>
-
                             <div class="mb-3 text-center">
                                 <button type="submit"
                                     class="text-white w-2/4 bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-400 rounded text-lg">Editar
@@ -69,6 +66,36 @@ export default {
         };
     },
 
+    methods: {
+        async editUser() {
+
+            if (this.passwordEdit.length < 6) {
+                this.passwordError = "A senha deve ter pelo menos 6 caracteres";
+                return;
+            }
+
+            const id = this.user.id
+            try {
+                const response = await axios.put("/users/" + id, {
+                    name: this.nameEdit,
+                    password: this.passwordEdit,
+                });
+                alert("Usuário editado com sucesso!");
+                this.$emit('refreshUsers')
+                this.$emit('close');
+            } catch (error) {
+                console.error("Aconteceu um erro:", error);
+
+                if (error.response) {
+                    console.error("Detalhes:", error.response.data);
+                }
+            }
+        },
+        close() {
+            this.$emit('close');
+        },
+    },
+    
     watch: {
         user: {
             immediate: true,
@@ -77,41 +104,7 @@ export default {
             },
         },
     },
-
-    methods: {
-        async editUser() {
-
-            if (this.passwordEdit.length < 6) {
-                this.passwordError = "A senha deve ter pelo menos 6 caracteres";
-                return;
-            }
-            const id = this.user.id
-
-            try {
-                const response = await axios.put("/users/" + id, {
-                    name: this.nameEdit,
-                    password: this.passwordEdit,
-                });
-
-                alert("Usuário editado com sucesso!");
-
-                this.$emit('refreshUsers')
-                this.$emit('close');
-
-            } catch (error) {
-                console.error("Aconteceu um erro:", error);
-                if (error.response) {
-                    console.error("Detalhes:", error.response.data);
-                }
-            }
-        },
-
-        close() {
-            this.$emit('close');
-        },
-    },
 };
-
 </script>
 
 <style>

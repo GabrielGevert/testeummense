@@ -3,7 +3,6 @@
         <div class="text-center">
             <h1 class="text-xl font-semibold mb-4">Dashboard</h1>
             <div class="border-b border-gray-300 mx-auto my-4"></div>
-
             <div class="font-medium">
                 <div class="flex justify-between mb-4">
                     <h1 class="font-medium mb-4 ml-3">Usuários</h1>
@@ -29,14 +28,12 @@
                                 <div class="flex justify-between">
                                     <button @click="showEditUserModal(user)"
                                         class="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-1 px-2 rounded w-20">Editar</button>
-
                                     <button @click="showDeleteUserModal(user)" v-if="isCurrentUser(user)"
                                         :class="{ 'bg-red-500 hover:bg-red-600 text-white font-normal py-1 px-2 rounded w-20': isCurrentUser(user), 'cursor-not-allowed opacity-50': !isCurrentUser(user) }"
                                         :disabled="!isCurrentUser(user)">
                                         Deletar
                                     </button>
                                 </div>
-
                             </td>
                         </tr>
                     </tbody>
@@ -53,7 +50,6 @@
 
 <script>
 import axios from '@/axios';
-
 import addUserModal from '../components/AddUserModal.vue';
 import deleteUserModal from '../components/DeleteUserModal.vue';
 import editUserModal from '../components/EditUserModal.vue';
@@ -78,14 +74,6 @@ export default {
     created() {
         this.userLoadData();
     },
-    watch: {
-        '$store.state.currentUser': {
-            handler(newValue) {
-                console.log('currentUser atualizado:', newValue);
-            },
-            immediate: true,
-        },
-    },
     methods: {
         async userLoadData() {
             try {
@@ -101,16 +89,12 @@ export default {
             return currentUser ? user.id !== currentUser.id : true;
         },
 
-
-
         showAddUserModal() {
             this.addUserModalVisible = true;
         },
         closeAddUserModal() {
             this.addUserModalVisible = false;
         },
-
-
 
         showDeleteUserModal(user) {
             this.deleteUserModalVisible = true;
@@ -120,8 +104,6 @@ export default {
             this.deleteUserModalVisible = false;
         },
 
-
-
         showEditUserModal(user) {
             this.editUserModalVisible = true;
             this.selectedUser = user;
@@ -130,11 +112,10 @@ export default {
             this.editUserModalVisible = false;
         },
 
-
         handleRefreshUsers() {
             this.userLoadData();
         },
-    }
+    },
 };
 </script>
   

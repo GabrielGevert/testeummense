@@ -5,8 +5,8 @@
             <div class="border-b border-gray-300 mx-auto my-4"></div>
             <span class="whitespace-no-wrap">Gostaria primeiramente de agradecer pela oportunidade de participar do processo
                 seletivo.</span>
-            <br>
-            <br>
+            <br />
+            <br />
             <p>
                 {{ isLoggedIn ? 'Logado com sucesso, se dirija ao' : 'Para começar a aplicação, por favor,' }}
                 <strong class="font-bold">{{ isLoggedIn ? 'Dashboard' : 'registre-se' }}</strong>

@@ -14,7 +14,6 @@
             </svg>
           </button>
         </header>
-
         <section class="p-6 relative" id="modalDescription">
           <slot name="body">
             <form @submit.prevent="addUser">
@@ -33,9 +32,7 @@
                 <input v-model="password" required type="password" name="password" placeholder="********"
                   :class="inputClasses">
               </div>
-
               <p v-if="passwordError" class="text-red-500 mb-5">{{ passwordError }}</p>
-
               <div class="mb-3 text-center">
                 <button type="submit"
                   class="text-red-100 w-2/4 bg-teal-500 border-0 py-2 px-6 focus:outline-none hover:bg-teal-400 rounded text-lg">Adicionar
@@ -65,7 +62,6 @@ export default {
   },
   methods: {
     async addUser() {
-
       if (this.password.length < 6) {
         this.passwordError = "A senha deve ter pelo menos 6 caracteres";
         return;
@@ -77,15 +73,12 @@ export default {
           email: this.email,
           password: this.password,
         });
-
         alert("Usuário adicionado com sucesso!");
-
         this.$emit('refreshUsers')
         this.$emit('close');
-
-
       } catch (error) {
         console.error("Aconteceu um erro:", error);
+
         if (error.response) {
           console.error("Detalhes:", error.response.data);
         }

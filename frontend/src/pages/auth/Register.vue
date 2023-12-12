@@ -21,7 +21,6 @@
         <label for="password_confirmation" class="leading-7 text-sm">Confirme sua senha:</label>
         <input required type="password" name="password_confirmation" id="password_confirmation" placeholder="********"
           v-model="passwordConfirmation" :class="inputClasses">
-
         <p v-if="emailError" class="text-red-500 text-center my-4 font-bold">{{ emailError }}</p>
         <p v-if="passwordError" class="text-red-500 text-center my-4 font-bold">{{ passwordError }}</p>
       </div>
@@ -68,15 +67,12 @@ export default {
           email: this.email,
           password: this.password,
         });
-
         this.passwordError = ""; // limpar msg erro
-
         alert("Registrado com sucesso! Você será redirecionado para a página de login.");
-
         this.$router.push('/auth/login');
       } catch (error) {
         this.emailError = "E-mail já cadastrado em nossa base de dados"
-        this.passwordError= ""
+        this.passwordError = ""
         console.error("Aconteceu um erro:", error);
         if (error.response) {
           console.error("Detalhes:", error.response.data);

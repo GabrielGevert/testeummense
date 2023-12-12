@@ -14,7 +14,6 @@
                         </svg>
                     </button>
                 </header>
-
                 <section class="p-6 relative" id="modalDescription">
                     <slot name="body">
                         <div class="mb-3">
@@ -26,7 +25,6 @@
                                 <strong class="font-bold">{{ user.email }}</strong>
                                 ?
                             </p>
-
                         </div>
                         <div class="mb-3 mt-16 text-center">
                             <button @click="deleteUser"
@@ -56,10 +54,8 @@ export default {
             try {
                 await axios.delete("/users/" + id)
                 alert("Usuário removido com sucesso!");
-
                 this.$emit('refreshUsers')
                 this.$emit('close');
-
             } catch (error) {
                 console.error("Um erro aconteceu na tentativa de excluir o usuário: ", error)
             }
