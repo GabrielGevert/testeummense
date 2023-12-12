@@ -1,6 +1,6 @@
 <p align="center"><img src="https://www.ummense.com/img/header/ummense.png"></p>
 
-# Teste Prático de Laravel 10 + Sanctum + Vue 3 + Axios + Vuex + VueRouter +
+# Teste Prático de Laravel 10 + Sanctum + Vue 3 + Axios + Vuex + VueRouter + Tailwindcss
 
 > Crud de usuários + Register/login + Auth
 
@@ -22,10 +22,12 @@ cd api
 composer install
 
 # Configurar variáveis de ambiente (DB_)
+cp .env.example .env
+php artisan key:generate
 /api/.env
 
 # Criar migrations (tabelas)
-php artisan migrate
+php artisan migrate --seed
 
 # Iniciar backend
 php artisan serve
@@ -37,6 +39,8 @@ php artisan serve
 ## Configuração - Frontend
 ``` bash
 # Acessar frontend (já na pasta raiz do projeto) (frontend)
+#Primeiro, abra um novo terminal para não desligar o backend
+
 cd frontend
 
 # Atualizar dependências
